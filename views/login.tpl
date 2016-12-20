@@ -1,4 +1,4 @@
-{{template "public/common_header.tpl"}}
+{{template "public/common_header.html"}}
 <link rel="stylesheet" href="/static/plugins/iCheck/square/blue.css">
 <body class="hold-transition login-page">
 <div class="login-box">
@@ -53,7 +53,7 @@
 <!-- iCheck -->
 
 
-{{template "public/common_footer.tpl"}}
+{{template "public/common_footer.html"}}
 <script src="/static/plugins/iCheck/icheck.min.js"></script>
 <script>
   $(function () {

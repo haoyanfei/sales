@@ -1,0 +1,52 @@
+ {{template "public/header.html"}}
+ <link rel="stylesheet" href="/static/plugins/tree/easyTree.min.css">
+ 
+<div class="content-wrapper">
+  <!-- Content Header (Page header) -->
+  <section class="content-header">
+    <h1>
+      Page Header
+      <small>Optional description</small>
+    </h1>
+    <ol class="breadcrumb">
+      <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
+      <li class="active">Here</li>
+    </ol>
+  </section>
+
+  <!-- Main content -->
+  <section class="content">
+
+    <div class="col-lg-10">
+      <h3 class="text-success">商品分类</h3>
+      <div class="easy-tree">
+        <ul>
+          <li data-id="1">Example 1</li>
+          <li data-id="2">Example 3
+            <ul>
+              <li data-id="2-1" >Example 1</li>
+            </ul>
+          </li>
+      </div>
+    </div>
+
+  </section>
+  <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+ 
+{{template "public/footer.html"}}
+<script src="/static/plugins/tree/easyTree.min.js"></script>
+<script>
+    (function ($) {
+        function init() {
+            $('.easy-tree').EasyTree({
+                addable: true,
+                editable: true,
+                deletable: true
+            });
+        }
+
+        window.onload = init();
+    })(jQuery)
+    </script> 

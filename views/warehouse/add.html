@@ -1,0 +1,147 @@
+{{template "public/header.html"}}
+<link href="/static/plugins/select2/select2.min.css" rel="stylesheet" />
+<style>
+    .select2-container--default .select2-selection--single .select2-selection__arrow {
+        height: 32px;
+    }
+    
+    span.select2.select2-container.select2-container--default {
+        width: 100%
+    }
+    
+    .select2-selection--single.select2-selection--single {
+        height: 34px;
+        width: 100%;
+    }
+</style>
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            商品入库
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li><a href="#">Examples</a></li>
+            <li class="active">404 error</li>
+        </ol>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <form class="form-horizontal" role="form" method="post" action="/admin/warehouse/postAdd" style="margin-top:20px">
+            <div class="form-group">
+                <table class="table" id="input-content-table">
+                    <tr>
+                        <td></td>
+                        <td>商品</td>
+                        <td>数量</td>
+                        <td>备注</td>
+                    </tr>
+                    <tr class="input-content">
+                        <td style="width:5%">
+                            <span class="glyphicon glyphicon-plus" onclick="Input.plus()"></span>
+                            <span class="glyphicon glyphicon-minus" onclick="Input.minus(this)"></span>
+                        </td>
+                        <td style="width:20%">
+                            <select class="js-example-data-array" name="sku_id" style="width:95%"></select>
+                        </td>
+                        <td style="width:20%">
+                            <input type="text" name="quantity" class="form-control">
+                            <input type="hidden" name="types" value="1" class="form-control">
+                        </td>
+                        <td style="width:20%">
+                            <input type="text" name="notes" class="form-control">
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="form-group">
+                <label for="inputEmail3" class="col-sm-2 control-label">备注</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" name="warehouse_notes" placeholder="notes">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputEmail3" class="col-sm-2 control-label">经办人</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" name="warehouse_author"placeholder="author">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button type="submit" class="btn btn-primary">保存</button>
+                </div>
+            </div>
+        </form>
+    </section>
+    <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+{{template "public/footer.html"}}
+
+
+
+<table id="clone-class" style="display:none">
+    <tr class="input-content">
+        <td style="width:5%">
+            <span class="glyphicon glyphicon-plus" onclick="Input.plus()"></span>
+            <span class="glyphicon glyphicon-minus" onclick="Input.minus(this)"></span>
+        </td>
+        <td style="width:20%">
+            <select class="js-example-data-array-1" name="sku_id" style="width:95%"></select>
+        </td>
+        <td style="width:20%">
+            <input type="text" name="quantity" class="form-control">
+        </td>
+        <td style="width:20%">
+            <input type="text" name="notes" class="form-control">
+        </td>
+    </tr>
+</table>
+
+<script src="/static/plugins/select2/select2.min.js"></script>
+<script>
+var Input = {
+    plus:function(){
+        
+        var cl = $("#clone-class").clone(true)
+    
+        cl.find(".js-example-data-array-1").attr("class","js-example-data-array")
+        $('.table').append(cl.html())
+        $.get("/admin/product/productForSelected",{},function(data){
+        $(".js-example-data-array").select2({
+            // placeholder: "请选择商品",
+            data: data
+            // delay: 250
+            
+          })
+    })
+    },
+    minus:function(obj){
+        var t = 0
+        $("#input-content-table").find(".input-content").each(function(k,v){
+           t++
+        })
+        console.log(t)
+        if(t>1){
+            $(obj).parent().parent().remove()
+        }else{
+            alert("最后一条不能删除")
+        }
+    }
+}
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){
+    $.get("/admin/product/productForSelected",{},function(data){
+        $(".js-example-data-array").select2({
+            // placeholder: "请选择商品",
+            data: data
+            
+          })
+    })
+})
+
+</script>

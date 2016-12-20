@@ -1,0 +1,129 @@
+{{template "public/header.html"}}
+<div class="content-wrapper" style="min-height: 916px;">
+  <!-- Content Header (Page header) -->
+  <section class="content-header">
+    <h1>
+      <!--Data Tables-->
+      <!--<small>advanced tables</small>-->
+      <small></small>
+
+    </h1>
+    <ol class="breadcrumb">
+      <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+      <li><a href="#">Tables</a></li>
+      <li class="active">Data tables</li>
+    </ol>
+  </section>
+
+  <!-- Main content -->
+  <section class="content">
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="box">
+          <div class="box-header">
+            <h3 class="box-title">商品列表</h3>
+
+            <div class="box-tools">
+              <div class="input-group input-group-sm">
+                <a href="/admin/warehouse/reduceInput"><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">新增</button></a>
+                <!--<button type="submit" class="btn btn-primary" ></button>-->
+              </div>
+            </div>
+          </div>
+          <!-- /.box-header -->
+          <div class="box-body">
+            <div id="example2_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
+              <div class="row">
+
+                <div class="col-sm-2">
+
+                </div>
+                <div class="col-sm-6"></div>
+              </div>
+              <div class="row">
+                <div class="col-sm-12">
+                  <table id="example2" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
+                    <thead>
+                      <tr role="row">
+                        <th class="sorting_asc" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-sort="ascending">ID标识</th>
+
+                        <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1">入库操作者</th>
+                        <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1">备注</th>
+                        <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1">创建时间</th>
+
+                        <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1">管理</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {{range .Result}}
+                      <tr role="row" class="even">
+                        <td class="sorting_1">{{.id}}</td>
+                        <td>{{.author}}</td>
+                        <td>{{.notes}}</td>
+                        <td>{{.created_at |convertt}}</td>
+                        <td><button class="btn btn-sm btn-success" onclick="Input.view({{.id}})">查看</button></td>
+                      </tr>
+                      {{end}}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+            </div>
+          </div>
+          <!-- /.box-body -->
+        </div>
+        <!-- /.box -->
+
+
+      </div>
+      <!-- /.col -->
+    </div>
+    <!-- /.row -->
+  </section>
+  <!-- /.content -->
+</div>
+<!-- Modal -->
+<!--modal框-->
+
+<div class="modal fade" id="myModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h5 class="modal-title">入库商品</h5>
+      </div>
+      <div class="modal-body">
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+        <!--<button type="button" class="btn btn-primary">Save changes</button>-->
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+<!--modal框-->
+{{template "public/footer.html"}}
+<script>
+  var Input = {
+    view:function(warehouse_id){
+      $.get("/admin/warehouse/getIoWarehouse",{warehouse_id:warehouse_id},function(data){
+            $(".modal-body").html('')
+            $(".modal-title").html("入库商品信息")
+            console.log(data)
+            var html = '<table class="table"><tr class="append-to"><td>商品</td><td>货品条形码</td><td>商品编码</td><td>入库数量</td><td>备注</td></tr>'
+            for(var i=0;i<data.length;i++){
+              html +="<tr><td>"+data[i].title+"["+data[i].sku_name+"]"+"</td><td>"+data[i].product_code+"</td><td>"+data[i].product_number+"</td><td>"+data[i].quantity+"</td><td>"+data[i].io_notes+"</td></tr>"
+            }
+            html +="</table>"
+            $(".modal-body").html(html)
+            $('#myModal').modal('show')
+         
+      },"json")
+    }
+  }
+</script>

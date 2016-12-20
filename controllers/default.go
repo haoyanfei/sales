@@ -1,3 +1,5 @@
+//Package controllers is controllers
+//for deal route params
 package controllers
 
 import (
@@ -8,10 +10,12 @@ import (
 	"web1/models"
 )
 
+// MainController main
 type MainController struct {
 	admin.AdminController
 }
 
+//Get is all get mothod
 func (c *MainController) Get() {
 
 	c.Data["Website"] = "beego.me休息休息下"
@@ -19,6 +23,7 @@ func (c *MainController) Get() {
 	c.TplName = "index.tpl"
 }
 
+// NotFound 404
 func (c *MainController) NotFound() {
 
 	role := new(models.Role)
@@ -30,6 +35,8 @@ func (c *MainController) NotFound() {
 
 	c.TplName = "404.tpl"
 }
+
+//BadServer 502
 func (c *MainController) BadServer() {
 	role := new(models.Role)
 	id, _ := role.Insert("zzzzz")
@@ -37,6 +44,7 @@ func (c *MainController) BadServer() {
 	c.TplName = "500.tpl"
 }
 
+//Login frame
 func (c *MainController) Login() {
 	c.TplName = "login.tpl"
 }

@@ -34,13 +34,11 @@ sql:
 							email varchar(100),
 							created_at int
 						);
-
+	create table ProductUnit (id int primary key auto_increment,
+							title varchar(100),
+						);
 
 */
-
-import (
-	"github.com/astaxie/beego/orm"
-)
 
 type Menu struct {
 	Id         int
@@ -72,13 +70,100 @@ type UserRole struct {
 	Uid     int
 	Role_id int
 }
+
+//User xx
 type User struct {
-	Id         int
-	Username   string `orm:"size(100)"`
-	Email      string `orm:"size(100)"`
-	Created_at int
+	ID        int
+	Username  string `orm:"size(100)"`
+	Email     string `orm:"size(100)"`
+	CreatedAt int
 }
 
-func init() {
-	orm.RegisterModel(new(User), new(Permission), new(Role), new(RolePermission), new(UserRole))
+//ProductType xx
+type ProductType struct {
+	ID    int
+	Title string `orm:"size(100)"`
+}
+
+//ProductUnit 计量单位
+type Store struct {
+	Id    int
+	Title string `orm:"size(100)"`
+}
+
+//Category 分类
+type Category struct {
+	Id        int
+	Parent_id int
+	Level     int
+	Sort      int
+	Title     string `orm:"size(100)"`
+}
+
+//Product 商品
+type Product struct {
+	Id            int
+	Price         int
+	CostPrice     int
+	ProductNumber string `orm:"size(100)"`
+	Title         string `orm:"size(100)"`
+	Subtitle      string `orm:"size(100)"`
+	Describute    string `orm:"size(100)"`
+	CreatedAt     int64
+	UnitId        int
+}
+
+//Sku 规格
+type Sku struct {
+	Id            int
+	Name          string `orm:"size(100)"`
+	ProductId     int
+	Price         int
+	CostPrice     int
+	ProductNumber string `orm:"size(100)"`
+	ProductCode   string `orm:"size(100)"`
+	CreatedAt     int
+	Stock         int
+	Lock          int
+}
+
+/**
+CREATE TABLE `golang`.`Stock` (
+  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `product_id` INT NULL,
+  `stock` INT NULL,
+  `lock` INT NULL,
+  PRIMARY KEY (`id`));
+*/
+
+/**
+CREATE TABLE `golang`.`warehouse` (
+  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `product_id` INT UNSIGNED NULL,
+  `quantity` INT UNSIGNED NULL,
+  `type` INT UNSIGNED NULL,
+  `status` INT UNSIGNED NULL,
+  PRIMARY KEY (`id`));
+*/
+
+type IoWarehouse struct {
+	Id          int
+	WarehouseId int
+	Uid         int
+	SkuId       int
+	Quantity    int
+	Notes       string `orm:"size(100)"`
+}
+
+//Warehouse 入库
+type Warehouse struct {
+	Id        int
+	ProductId int
+	SkuId     int
+	Quantity  int
+	Types     int    //1.入库 2.出库
+	Status    int    // 0.待审核.1审核.2. 驳回
+	Notes     string `orm:"size(100)"`
+	Author    string `orm:"size(100)"`
+	CreatedAt int
 }

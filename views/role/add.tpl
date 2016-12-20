@@ -1,4 +1,4 @@
-{{template "public/header.tpl"}}
+{{template "public/header.html"}}
 
 	<div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -36,4 +36,4 @@
   </div>
   <!-- /.content-wrapper -->
 
-{{template "public/footer.tpl"}}
+{{template "public/footer.html"}}

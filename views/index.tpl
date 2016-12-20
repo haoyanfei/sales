@@ -1,4 +1,4 @@
-{{ template "public/header.tpl"}}
+{{ template "public/header.html"}}
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -24,4 +24,4 @@
   <!-- /.content-wrapper -->
 
 
-{{ template "public/footer.tpl"}}
+{{ template "public/footer.html"}}
