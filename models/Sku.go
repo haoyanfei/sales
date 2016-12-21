@@ -104,6 +104,13 @@ func (r *Sku) GetAllSku() []orm.Params {
 	return args
 }
 
+func (r *Sku) GetStock() []orm.Params {
+	o := orm.NewOrm()
+	var args []orm.Params
+	o.Raw("select A.store_id , B.id as sku_id,B.name as sku_name,C.title as sku_title ,B.product_code as product_code,A.stock as useful from stock as A left join sku as B on A.sku_id=B.id left join product as C on B.product_id=C.id").Values(&args)
+	return args
+}
+
 //GetSkuByWhere xxx
 func (r *Sku) GetSkuByWhere(where string) []orm.Params {
 	o := orm.NewOrm()
@@ -130,5 +137,23 @@ func (r *Sku) ReduceStock(skuId int, quantity int) bool {
 	p, _ := o.Raw("update sku set stock=stock-? where id= ? ").Prepare()
 	p.Exec(quantity, skuId)
 	p.Close()
+	return true
+}
+
+//DealStock
+func (s *Stock) DealStock(store_id int, sku_id int, quantity int) bool {
+	//store_id sku_id quantity
+	o := orm.NewOrm()
+	var stock []Stock
+	num, _ := o.Raw("select * from stock where store_id =? AND sku_id=?", store_id, sku_id).QueryRows(&stock)
+	var p orm.RawPreparer
+	if num > 0 {
+		p, _ = o.Raw("update stock set stock = stock + ? where store_id =? AND sku_id=? ").Prepare()
+	} else {
+		p, _ = o.Raw("insert into stock (stock,store_id,sku_id)values(?,?,?)").Prepare()
+	}
+	res, _ := p.Exec(quantity, store_id, sku_id)
+	p.Close()
+	fmt.Println(res)
 	return true
 }

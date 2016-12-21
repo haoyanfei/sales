@@ -9,6 +9,11 @@ import (
 	"github.com/astaxie/beego"
 )
 
+func dataKV(data map[int]string, k string) string {
+	intK, _ := strconv.Atoi(k)
+	return data[intK]
+}
+
 func convertT(timestamp string) string {
 	t, v := strconv.ParseInt(timestamp, 10, 0)
 	fmt.Println(v)
@@ -19,5 +24,6 @@ func convertT(timestamp string) string {
 }
 func main() {
 	beego.AddFuncMap("convertt", convertT)
+	beego.AddFuncMap("dataKV", dataKV)
 	beego.Run()
 }

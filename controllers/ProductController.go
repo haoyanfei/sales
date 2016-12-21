@@ -62,7 +62,7 @@ func (p *ProductController) List() {
 
 //Add xx
 func (p *ProductController) Add() {
-	p.Data["Unit"] = new(models.Store).All()
+
 	p.TplName = "product/add.html"
 }
 
@@ -71,14 +71,15 @@ func (p *ProductController) Edit() {
 	id, _ := p.GetInt("id")
 	p.Data["Info"] = new(models.Product).GetByID(id)
 	p.Data["Sku"] = new(models.Sku).GetByProductId(id)
-	p.Data["Unit"] = new(models.Store).All()
 	p.TplName = "product/edit.html"
 }
 
 //Stock xxx
 func (p *ProductController) Stock() {
-	p.Data["Info"] = new(models.Sku).GetAllSku()
+	p.Data["Info"] = new(models.Sku).GetStock()
 	fmt.Println(p.Data["Info"])
+	p.Data["store"] = new(models.Store).FormatAll()
+	fmt.Println("---------------", p.Data["store"])
 	p.TplName = "product/stock.html"
 }
 

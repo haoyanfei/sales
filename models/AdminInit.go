@@ -127,6 +127,14 @@ type Sku struct {
 	Lock          int
 }
 
+type Stock struct {
+	Id       int
+	SkuId    int
+	Stock    int
+	StoreId  int
+	CreateAt int
+}
+
 /**
 CREATE TABLE `golang`.`Stock` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,

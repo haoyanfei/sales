@@ -53,5 +53,14 @@ func (r *Store) All() []Store {
 	o.Raw("select id,title from store").QueryRows(&Store)
 	fmt.Println(Store)
 	return Store
+}
 
+//FormatAll
+func (r *Store) FormatAll() map[int]string {
+	store := r.All()
+	format := make(map[int]string, 0)
+	for _, v := range store {
+		format[v.Id] = v.Title
+	}
+	return format
 }

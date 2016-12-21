@@ -31,11 +31,13 @@ func (p *WarehouseController) OutList() {
 
 //Add xx
 func (p *WarehouseController) AddInput() {
+	p.Data["Unit"] = new(models.Store).All()
 	p.TplName = "warehouse/add.html"
 }
 
 //Add xx
 func (p *WarehouseController) ReduceInput() {
+	p.Data["Unit"] = new(models.Store).All()
 	p.TplName = "warehouse/reduce.html"
 }
 
@@ -48,6 +50,7 @@ func (p *WarehouseController) PostAdd() {
 	warehose["types"] = p.GetString("types")
 	warehose["notes"] = p.GetString("warehouse_notes")
 	warehose["author"] = p.GetString("warehouse_author")
+	storeId, _ := p.GetInt("store_id")
 	warehouseId, _ := new(models.Warehouse).Insert(warehose)
 
 	m := make(map[string][]string)
@@ -55,7 +58,7 @@ func (p *WarehouseController) PostAdd() {
 	m["quantity"] = p.Input()["quantity"]
 	m["notes"] = p.Input()["notes"]
 	types, _ := p.GetInt("types")
-	w := new(models.IoWarehouse).Insert(m, warehouseId, types)
+	w := new(models.IoWarehouse).Insert(m, warehouseId, types, storeId)
 	fmt.Println(w)
 	if types == 1 {
 		p.Ctx.Redirect(302, "/admin/warehouse/inputList")

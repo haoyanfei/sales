@@ -65,17 +65,17 @@ func (Io *IoWarehouse) TableName() string {
 }
 
 //IoWarehouse Insert
-func (Io *IoWarehouse) Insert(m map[string][]string, warehouseId int64, types int) bool {
+func (Io *IoWarehouse) Insert(m map[string][]string, warehouseId int64, types int, storeId int) bool {
 	o := orm.NewOrm()
-	p, _ := o.Raw("insert into ioWarehouse(warehouse_id,sku_id,quantity,notes) values(?,?,?,?)").Prepare()
+	p, _ := o.Raw("insert into ioWarehouse(warehouse_id,sku_id,quantity,notes,store_id) values(?,?,?,?,?)").Prepare()
 	for i := 0; i < len(m["sku_id"]); i++ {
 		skuId, _ := strconv.Atoi(m["sku_id"][i])
 		quantity, _ := strconv.Atoi(m["quantity"][i])
-		p.Exec(warehouseId, skuId, quantity, m["notes"][i])
+		p.Exec(warehouseId, skuId, quantity, m["notes"][i], storeId)
 		if types == 1 {
-			new(Sku).AddStock(skuId, quantity)
+			new(Stock).DealStock(storeId, skuId, +quantity)
 		} else if types == 2 {
-			new(Sku).ReduceStock(skuId, quantity)
+			new(Stock).DealStock(storeId, skuId, -quantity)
 		}
 	}
 	p.Close()
