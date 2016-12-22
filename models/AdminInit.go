@@ -161,6 +161,7 @@ type IoWarehouse struct {
 	SkuId       int
 	Quantity    int
 	Notes       string `orm:"size(100)"`
+	StoreId     int
 }
 
 //Warehouse 入库

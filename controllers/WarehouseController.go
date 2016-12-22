@@ -76,3 +76,11 @@ func (p *WarehouseController) GetIoWarehouse() {
 	p.Data["json"] = data
 	p.ServeJSON()
 }
+func (p *WarehouseController) Discard() {
+	warehouseId, _ := p.GetInt("warehouse_id")
+	new(models.IoWarehouse).Discard(warehouseId)
+	data := make(map[string]string)
+	data["status"] = "200"
+	p.Data["json"] = data
+	p.ServeJSON()
+}

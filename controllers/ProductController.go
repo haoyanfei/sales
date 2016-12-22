@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"bytes"
 	"fmt"
 	"strconv"
 	"time"
@@ -55,7 +56,31 @@ func (p *ProductController) AddAndEdit() {
 //List xx
 func (p *ProductController) List() {
 	r := new(models.Product)
-	result := r.All()
+	var w bytes.Buffer
+	productCode := p.GetString("product_code")
+	w.WriteString("1=1 ")
+	if productCode != "" {
+		w.WriteString(" AND product_code like \"%")
+		w.WriteString(productCode)
+		w.WriteString("%\" ")
+	}
+	productNumber := p.GetString("product_number")
+	if productNumber != "" {
+		w.WriteString("AND product_number like \"%")
+		w.WriteString(productNumber)
+		w.WriteString("%\" ")
+	}
+	title := p.GetString("title")
+	if title != "" {
+		w.WriteString("AND title like \"%")
+		w.WriteString(title)
+		w.WriteString("%\" ")
+	}
+
+	where := w.String()
+
+	result := r.AllByWhere(where)
+	fmt.Println(result)
 	p.Data["Result"] = result
 	p.TplName = "product/list.html"
 }

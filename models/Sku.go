@@ -157,3 +157,14 @@ func (s *Stock) DealStock(store_id int, sku_id int, quantity int) bool {
 	fmt.Println(res)
 	return true
 }
+
+//DealStock
+func (s *Stock) DiscardStock(storeId int, skuId int, quantity int) bool {
+	//store_id sku_id quantity
+	o := orm.NewOrm()
+	p, _ := o.Raw("update stock set stock = stock + ? where store_id =? AND sku_id=? ").Prepare()
+	res, _ := p.Exec(quantity, storeId, skuId)
+	fmt.Println(res)
+	p.Close()
+	return true
+}

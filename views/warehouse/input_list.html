@@ -49,6 +49,7 @@
 
                         <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1">操作者</th>
                         <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1">备注</th>
+                        <!--<th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1">系统备注</th>-->
                         <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1">创建时间</th>
 
                         <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1">管理</th>
@@ -60,8 +61,17 @@
                         <td class="sorting_1">{{.id}}</td>
                         <td>{{.author}}</td>
                         <td>{{.notes}}</td>
+                        <!--<td>{{.system_notes}}</td>-->
                         <td>{{.created_at |convertt}}</td>
-                        <td><button class="btn btn-sm btn-success" onclick="Input.view({{.id}})">查看</button></td>
+                        <td>
+                          <button class="btn btn-sm btn-success" onclick="Input.view({{.id}})"> 查&nbsp;&nbsp;&nbsp;&nbsp;看 </button>
+                          {{if ne .status "1" }}
+                            <button class="btn btn-sm btn-danger" onclick="Input.discard({{.id}})">作&nbsp;&nbsp;&nbsp;&nbsp;废 </button>
+                            {{else}}
+                            <button class="btn btn-sm btn-info">已作废</button>                            
+                          {{end}}
+                        </td>
+                        
                       </tr>
                       {{end}}
                     </tbody>
@@ -124,6 +134,19 @@
             $(".modal-body").html(html)
             $('#myModal').modal('show')
          
+      },"json")
+    },
+    discard:function(warehouse_id){
+      if(!confirm("是否确定删除")){
+                return
+      }
+       $.post("/admin/warehouse/discard",{warehouse_id:warehouse_id},function(data){
+            if(data.status=="200"){
+              //
+              location.reload()
+            }else{
+               alert("作废失败")
+            }
       },"json")
     }
   }

@@ -33,6 +33,7 @@ func init() {
 	beego.Router("/admin/warehouse/addInput", &controllers.WarehouseController{}, "get:AddInput")
 	beego.Router("/admin/warehouse/reduceInput", &controllers.WarehouseController{}, "get:ReduceInput")
 	beego.Router("/admin/warehouse/postAdd", &controllers.WarehouseController{}, "post:PostAdd")
+	beego.Router("/admin/warehouse/discard", &controllers.WarehouseController{}, "post:Discard")
 
 	beego.Router("/admin/warehouse/getIoWarehouse", &controllers.WarehouseController{}, "get:GetIoWarehouse")
 

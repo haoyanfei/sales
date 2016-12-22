@@ -82,6 +82,21 @@ func (Io *IoWarehouse) Insert(m map[string][]string, warehouseId int64, types in
 	return true
 }
 
+//Discard
+func (Io *IoWarehouse) Discard(warehouseId int) bool {
+	o := orm.NewOrm()
+	//0.可用 1 废弃
+	p, _ := o.Raw("update warehouse set `status` = ? , system_notes = ? where id=? ").Prepare()
+	p.Exec(1, "discard", warehouseId)
+	var args []IoWarehouse
+	o.Raw("select id,store_id,sku_id,quantity from ioWarehouse where warehouse_id=?", warehouseId).QueryRows(&args)
+	for _, v := range args {
+		new(Stock).DiscardStock(v.StoreId, v.SkuId, -v.Quantity)
+	}
+	p.Close()
+	return true
+}
+
 //GetById xx
 func (Io *IoWarehouse) GetById(warehouseId int) []orm.Params {
 	o := orm.NewOrm()

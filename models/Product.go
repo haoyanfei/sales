@@ -68,3 +68,10 @@ func (r *Product) All() []Product {
 	return product
 
 }
+
+func (r *Product) AllByWhere(where string) []orm.Params {
+	o := orm.NewOrm()
+	var args []orm.Params
+	o.Raw("select * from product where ? ", where).Values(&args)
+	return args
+}
