@@ -4,6 +4,7 @@ import (
 	// "fmt"
 	//	"reflect"
 
+	"fmt"
 	_ "web1/libary/models"
 
 	"github.com/astaxie/beego/orm"
@@ -69,9 +70,10 @@ func (r *Product) All() []Product {
 
 }
 
-func (r *Product) AllByWhere(where string) []orm.Params {
+func (r *Product) AllByWhere(sql string) []orm.Params {
 	o := orm.NewOrm()
 	var args []orm.Params
-	o.Raw("select * from product where ? ", where).Values(&args)
+	fmt.Println(sql)
+	o.Raw(sql).Values(&args)
 	return args
 }

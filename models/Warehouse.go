@@ -102,6 +102,6 @@ func (Io *IoWarehouse) GetById(warehouseId int) []orm.Params {
 	o := orm.NewOrm()
 	// var args1, args2 []orm.Params
 	var args1 []orm.Params
-	o.Raw("select A.warehouse_id,A.notes as io_notes,A.sku_id as sku_id,A.quantity as quantity ,B.name as sku_name,B.product_code,B.product_number ,C.title from ioWarehouse as A left join sku as B on B.id =A.sku_id left join product as C on B.product_id=C.id  where A.warehouse_id=?", warehouseId).Values(&args1)
+	o.Raw("select A.id as ioId,A.warehouse_id,A.notes as io_notes,A.sku_id as sku_id,A.quantity as quantity ,B.name as sku_name,B.product_code,B.product_number ,C.title from ioWarehouse as A left join sku as B on B.id =A.sku_id left join product as C on B.product_id=C.id  where A.warehouse_id=?", warehouseId).Values(&args1)
 	return args1
 }

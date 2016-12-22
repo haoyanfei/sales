@@ -58,7 +58,7 @@ func (p *ProductController) List() {
 	r := new(models.Product)
 	var w bytes.Buffer
 	productCode := p.GetString("product_code")
-	w.WriteString("1=1 ")
+	w.WriteString("select * from product where 1=1 ")
 	if productCode != "" {
 		w.WriteString(" AND product_code like \"%")
 		w.WriteString(productCode)
@@ -77,9 +77,8 @@ func (p *ProductController) List() {
 		w.WriteString("%\" ")
 	}
 
-	where := w.String()
-
-	result := r.AllByWhere(where)
+	sql := w.String()
+	result := r.AllByWhere(sql)
 	fmt.Println(result)
 	p.Data["Result"] = result
 	p.TplName = "product/list.html"

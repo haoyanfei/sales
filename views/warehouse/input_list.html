@@ -126,9 +126,9 @@
             $(".modal-body").html('')
             $(".modal-title").html("入库商品信息")
             console.log(data)
-            var html = '<table class="table"><tr class="append-to"><td>商品</td><td>货品条形码</td><td>商品编码</td><td>入库数量</td><td>备注</td></tr>'
+            var html = '<table class="table"><tr class="append-to"><td>入库id</td><td>商品</td><td>货品条形码</td><td>商品编码</td><td>入库数量</td><td>备注</td></tr>'
             for(var i=0;i<data.length;i++){
-              html +="<tr><td>"+data[i].title+"["+data[i].sku_name+"]"+"</td><td>"+data[i].product_code+"</td><td>"+data[i].product_number+"</td><td>"+data[i].quantity+"</td><td>"+data[i].io_notes+"</td></tr>"
+              html +="<tr><td>"+data[i].ioId+"</td><td>"+data[i].title+"["+data[i].sku_name+"]"+"</td><td>"+data[i].product_code+"</td><td>"+data[i].product_number+"</td><td>"+data[i].quantity+"</td><td>"+data[i].io_notes+"</td></tr>"
             }
             html +="</table>"
             $(".modal-body").html(html)
