@@ -50,7 +50,7 @@ func (r *Sku) Insert(SkuData map[string][]string, productId int64) bool {
 	for i := 0; i < len(SkuData["name"]); i++ {
 		price, _ := strconv.Atoi(SkuData["price"][i])
 		cosePrice, _ := strconv.Atoi(SkuData["cost_price"][i])
-		p.Exec(SkuData["name"][i], productId, price, cosePrice, SkuData["product_number"][i], SkuData["product_code"][i])
+		p.Exec(SkuData["name"][i], productId, price*100, cosePrice*100, SkuData["product_number"][i], SkuData["product_code"][i])
 	}
 	p.Close()
 	return true
@@ -66,10 +66,10 @@ func (r *Sku) Update(SkuData map[string][]string, productId int) bool {
 		if ids, ok := SkuData["id"]; ok {
 			id, _ := strconv.Atoi(ids[i])
 			if id > 0 {
-				p.Exec(SkuData["name"][i], price, cosePrice, SkuData["product_number"][i], SkuData["product_code"][i], id)
+				p.Exec(SkuData["name"][i], price*100, cosePrice*100, SkuData["product_number"][i], SkuData["product_code"][i], id)
 			} else {
 				p, _ := o.Raw("insert into sku(name,product_id,price,cost_price,product_number,product_code) values(?,?,?,?,?,?)").Prepare()
-				p.Exec(SkuData["name"][i], productId, price, cosePrice, SkuData["product_number"][i], SkuData["product_code"][i])
+				p.Exec(SkuData["name"][i], productId, price*100, cosePrice*100, SkuData["product_number"][i], SkuData["product_code"][i])
 			}
 		}
 	}

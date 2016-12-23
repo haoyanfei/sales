@@ -9,6 +9,10 @@ import (
 	"github.com/astaxie/beego"
 )
 
+func division(args1, args2 int) float64 {
+	return float64(args1 / args2)
+}
+
 func dataKV(data map[int]string, k string) string {
 	intK, _ := strconv.Atoi(k)
 	return data[intK]
@@ -25,5 +29,7 @@ func convertT(timestamp string) string {
 func main() {
 	beego.AddFuncMap("convertt", convertT)
 	beego.AddFuncMap("dataKV", dataKV)
+	beego.AddFuncMap("division", division)
+
 	beego.Run()
 }
