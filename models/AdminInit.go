@@ -103,8 +103,6 @@ type Category struct {
 //Product 商品
 type Product struct {
 	Id            int
-	Price         int
-	CostPrice     int
 	ProductNumber string `orm:"size(100)"`
 	Title         string `orm:"size(100)"`
 	Subtitle      string `orm:"size(100)"`
@@ -118,8 +116,8 @@ type Sku struct {
 	Id            int
 	Name          string `orm:"size(100)"`
 	ProductId     int
-	Price         int
-	CostPrice     int
+	Price         float64
+	CostPrice     float64
 	ProductNumber string `orm:"size(100)"`
 	ProductCode   string `orm:"size(100)"`
 	CreatedAt     int

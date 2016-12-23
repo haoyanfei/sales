@@ -59,10 +59,10 @@
                     <input type="text" class="form-control" name="product_code" value="{{.ProductCode}}">
                 </div>
                 <div class="col-sm-2">
-                    <input type="text" class="form-control" name="cost_price" value="{{division .CostPrice 100}}">
+                    <input type="text" class="form-control" name="cost_price" value="{{.CostPrice}}">
                 </div>
                 <div class="col-sm-2">
-                    <input type="text" class="form-control" name="price" value="{{division .Price 1000}}">
+                    <input type="text" class="form-control" name="price" value="{{.Price}}">
                 </div>
             </div>
             {{end}}
