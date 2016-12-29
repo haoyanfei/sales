@@ -48,3 +48,19 @@ func (c *MainController) BadServer() {
 func (c *MainController) Login() {
 	c.TplName = "login.tpl"
 }
+
+//Login frame
+func (c *MainController) ToLogin() {
+	username := c.GetString("username")
+	pwd := c.GetString("password")
+	fmt.Println(username)
+	fmt.Println("xxxxfffff")
+
+	if username == "im" && pwd == "huanhuan123" {
+		c.Ctx.SetCookie("userinfo", "goodluck")
+		c.Ctx.Redirect(302, "/")
+	} else {
+		c.Ctx.Redirect(302, "/login")
+	}
+
+}
